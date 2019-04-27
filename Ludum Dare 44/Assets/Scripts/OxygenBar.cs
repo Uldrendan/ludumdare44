@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class OxygenBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.localScale = new Vector2(1, GameManager.instance.oxygen / 100);
     }
 }
