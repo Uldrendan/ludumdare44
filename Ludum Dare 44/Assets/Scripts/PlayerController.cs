@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D _rb;
     SpriteRenderer _sr;
+    Animator _anim;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -24,7 +26,19 @@ public class PlayerController : MonoBehaviour
             _sr.flipX = true;
         else if(move.x > 0)
             _sr.flipX = false;
-
+        _anim.SetFloat("WalkSpeed", Mathf.Abs(move.x));
         _rb.velocity = move;        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ground")
+            _anim.SetBool("Falling", false);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ground")
+            _anim.SetBool("Falling", true);
     }
 }
