@@ -21,6 +21,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.55f), Vector2.down, 0.1f);
+        Debug.DrawRay(new Vector2(transform.position.x,transform.position.y-0.5f), Vector2.down, Color.red);
+        if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
+            _anim.SetBool("Falling", false);
+        else
+            _anim.SetBool("Falling", true);
+
         Vector2 move = new Vector2(Input.GetAxis("Horizontal") * maxSpeed, -Mathf.Max(_rb.velocity.y,maxFallSpeed));
         if (move.x < 0)
             _sr.flipX = true;
@@ -28,17 +35,5 @@ public class PlayerController : MonoBehaviour
             _sr.flipX = false;
         _anim.SetFloat("WalkSpeed", Mathf.Abs(move.x));
         _rb.velocity = move;        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "ground")
-            _anim.SetBool("Falling", false);
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "ground")
-            _anim.SetBool("Falling", true);
     }
 }
