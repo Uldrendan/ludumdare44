@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
         Vector2 move = new Vector2(Input.GetAxis("Horizontal") * maxSpeed, Mathf.Max(_rb.velocity.y,maxFallSpeed));
         if (move.x < 0)
             _sr.flipX = true;
-        else
+        else if(move.x > 0)
             _sr.flipX = false;
 
         _rb.velocity = move;        
