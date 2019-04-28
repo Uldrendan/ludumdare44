@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     public float maxFallSpeed = 7;
     public float acceleration = 1;
 
+    public int numDrills;
+        public int numBlinks;
+    public int numBoosts; 
+
     Rigidbody2D _rb;
     SpriteRenderer _sr;
     Animator _anim;
@@ -35,11 +39,11 @@ public class PlayerController : MonoBehaviour
         _anim.SetFloat("WalkSpeed", Mathf.Abs(move.x));
         _rb.AddForce(move);
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B) && numBlinks > 0)
             Blink();
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V) && numBoosts > 0)
             Shift();
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && numDrills > 0)
             Dig();
 
         if (Mathf.Abs(_rb.velocity.x) > maxWalkingSpeed)
@@ -53,6 +57,7 @@ public class PlayerController : MonoBehaviour
         Vector3 blinkDir = Vector2.down*2;
 
         transform.position += blinkDir;
+        numBlinks -= 1;
     }
 
     void Shift()
@@ -65,6 +70,7 @@ public class PlayerController : MonoBehaviour
             shiftForce = new Vector2(-300, 150);
         _rb.AddForce(shiftForce);
         _anim.SetTrigger("Dashing");
+        numBoosts -= 1;
     }
 
     void Dig()
@@ -73,5 +79,6 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.down, Color.green);
         if (hit.collider != null && hit.collider.gameObject.name == "Breakable")
             Destroy(hit.collider.gameObject);
+        numDrills -= 1;
     }
 }
