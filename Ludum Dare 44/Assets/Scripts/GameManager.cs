@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public float oxygen = 100;
 
     public GameObject gameOverPanel;
+    public PlayerController player;
 
     private void Awake()
     {
@@ -28,5 +29,45 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(true);
         }
             
+    }
+
+    public void PurchaseDrill(bool refund)
+    {
+        if (!refund && oxygen > 0)
+        {
+            oxygen -= 25;
+            player.numDrills += 1;
+        }
+        else if(refund && player.numDrills > 0)
+        {
+            oxygen += 25;
+            player.numDrills -= 1;
+        }
+    }
+    public void PurchaseBoost(bool refund)
+    {
+        if (!refund && oxygen > 0)
+        {
+            oxygen -= 25;
+            player.numBoosts += 1;
+        }
+        else if (refund && player.numDrills > 0)
+        {
+            oxygen += 25;
+            player.numBoosts -= 1;
+        }
+    }
+    public void PurchaseBlink(bool refund)
+    {
+        if (!refund && oxygen > 0)
+        {
+            oxygen -= 25;
+            player.numBlinks += 1;
+        }
+        else if (refund && player.numDrills > 0)
+        {
+            oxygen += 25;
+            player.numBlinks -= 1;
+        }
     }
 }
