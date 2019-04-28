@@ -869,7 +869,6 @@ GameObject:
   m_Component:
   - component: {fileID: 960150439}
   - component: {fileID: 960150438}
-  - component: {fileID: 960150437}
   m_Layer: 0
   m_Name: MiniMap Camera
   m_TagString: Untagged
@@ -877,14 +876,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &960150437
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960150436}
-  m_Enabled: 1
 --- !u!20 &960150438
 Camera:
   m_ObjectHideFlags: 0
@@ -1199,6 +1190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oxygen: 100
+  gameOverPanel: {fileID: 0}
 --- !u!4 &1338881544
 Transform:
   m_ObjectHideFlags: 0
