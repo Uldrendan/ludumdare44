@@ -63,5 +63,6 @@ public class PlayerController : MonoBehaviour
         else
             shiftForce = new Vector2(-300, 150);
         _rb.AddForce(shiftForce);
+        _anim.SetTrigger("Dashing");
     }
 }
