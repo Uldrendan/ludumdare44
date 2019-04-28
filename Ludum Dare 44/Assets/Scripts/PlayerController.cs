@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float maxSpeed = 7;
+    public float maxWalkingSpeed = 10;
     public float maxFallSpeed = 7;
     public float acceleration = 1;
 
@@ -28,35 +28,40 @@ public class PlayerController : MonoBehaviour
         else
             _anim.SetBool("Falling", true);
 
-        Vector2 move = new Vector2(Input.GetAxis("Horizontal") * maxSpeed, -Mathf.Max(_rb.velocity.y,maxFallSpeed));
+        Vector2 move = new Vector2(Input.GetAxis("Horizontal") * maxWalkingSpeed,0);
         if (move.x < 0)
             _sr.flipX = true;
         else if(move.x > 0)
             _sr.flipX = false;
         _anim.SetFloat("WalkSpeed", Mathf.Abs(move.x));
-        _rb.velocity = move;
+        _rb.AddForce(move);
 
         if (Input.GetKeyDown(KeyCode.B))
             Blink();
         if (Input.GetKeyDown(KeyCode.V))
             Shift();
+
+        if (Mathf.Abs(_rb.velocity.x) > maxWalkingSpeed)
+            _rb.velocity = new Vector2(!_sr.flipX ? maxWalkingSpeed : -maxWalkingSpeed, _rb.velocity.y);
+        if (Mathf.Abs(_rb.velocity.y) > maxFallSpeed)
+            _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
     }
 
     void Blink()
     {
-        Vector3 blinkDir = Vector2.down;
+        Vector3 blinkDir = Vector2.down*2;
 
         transform.position += blinkDir;
     }
 
     void Shift()
     {
-        Vector3 shiftDir = Vector3.zero;
+        Vector3 shiftForce = Vector3.zero;
 
         if (!_sr.flipX)
-            shiftDir = Vector3.right * 3;
+            shiftForce = new Vector2(300,150);
         else
-            shiftDir = Vector3.left * 3;
-        transform.position += shiftDir;
+            shiftForce = new Vector2(-300, 150);
+        _rb.AddForce(shiftForce);
     }
 }
