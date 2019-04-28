@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.55f), Vector2.down, 0.1f);
-        Debug.DrawRay(new Vector2(transform.position.x,transform.position.y-0.5f), Vector2.down, Color.red);
         if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
             _anim.SetBool("Falling", false);
         else
@@ -40,6 +39,8 @@ public class PlayerController : MonoBehaviour
             Blink();
         if (Input.GetKeyDown(KeyCode.V))
             Shift();
+        if (Input.GetKeyDown(KeyCode.C))
+            Dig();
 
         if (Mathf.Abs(_rb.velocity.x) > maxWalkingSpeed)
             _rb.velocity = new Vector2(!_sr.flipX ? maxWalkingSpeed : -maxWalkingSpeed, _rb.velocity.y);
@@ -63,5 +64,13 @@ public class PlayerController : MonoBehaviour
         else
             shiftForce = new Vector2(-300, 150);
         _rb.AddForce(shiftForce);
+    }
+
+    void Dig()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.55f), Vector2.down, 0.1f);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.down, Color.green);
+        if (hit.collider != null && hit.collider.gameObject.name == "Breakable")
+            Destroy(hit.collider.gameObject);
     }
 }

@@ -52,17 +52,12 @@ public class LevelGenerator : MonoBehaviour
                     }
                     else if (letter == "b")
                     {
-                        Instantiate(BreakableFloor, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject breakable = Instantiate(BreakableFloor, new Vector3(x, y, 0), Quaternion.identity);
+                        breakable.name = "Breakable";
                     }
                 }
                 y--;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
