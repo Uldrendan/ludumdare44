@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+        Time.timeScale = 1;
     }
 
     private void Update()
