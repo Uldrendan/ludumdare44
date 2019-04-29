@@ -143,6 +143,10 @@ MonoBehaviour:
   numDrills: 0
   numBlinks: 0
   numBoosts: 0
+  blinkSound: {fileID: 8300000, guid: 195552c07f238884b9f32bad937e1644, type: 3}
+  drillSound: {fileID: 8300000, guid: 69ee6f2f54f9eb645b48377401dcd35a, type: 3}
+  dashSound: {fileID: 8300000, guid: 554f4a62e35801143b67695ae5b3dba6, type: 3}
+  landingSound: {fileID: 8300000, guid: dc524010a6cb3c84892424bfd7199492, type: 3}
 --- !u!70 &1931073416
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
