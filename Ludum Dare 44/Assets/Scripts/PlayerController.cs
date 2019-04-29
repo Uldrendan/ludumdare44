@@ -10,24 +10,37 @@ public class PlayerController : MonoBehaviour
 
     public int numDrills;
         public int numBlinks;
-    public int numBoosts; 
+    public int numBoosts;
+
+    public AudioClip blinkSound;
+    public AudioClip drillSound;
+    public AudioClip dashSound;
+    public AudioClip landingSound;
 
     Rigidbody2D _rb;
     SpriteRenderer _sr;
     Animator _anim;
+    AudioSource _audioSource;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.55f), Vector2.down, 0.1f);
         if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
+        {
+            if (_anim.GetBool("Falling") == true)
+            {
+                _audioSource.PlayOneShot(landingSound, 1.0f);
+            }
             _anim.SetBool("Falling", false);
+        }
         else
             _anim.SetBool("Falling", true);
 
@@ -58,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position += blinkDir;
         numBlinks -= 1;
+        _audioSource.PlayOneShot(blinkSound, 1.0f);
     }
 
     void Shift()
@@ -71,6 +85,7 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(shiftForce);
         _anim.SetTrigger("Dashing");
         numBoosts -= 1;
+        _audioSource.PlayOneShot(dashSound, 1.0f);
     }
 
     void Dig()
@@ -80,5 +95,6 @@ public class PlayerController : MonoBehaviour
         if (hit.collider != null && hit.collider.gameObject.name == "Breakable")
             Destroy(hit.collider.gameObject);
         numDrills -= 1;
+        _audioSource.PlayOneShot(drillSound, 1.0f);
     }
 }
