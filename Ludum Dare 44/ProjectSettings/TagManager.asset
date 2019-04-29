@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Breakable
+  - Entrance
+  - Exit
   layers:
   - Default
   - TransparentFX

@@ -2761,6 +2761,7 @@ Transform:
   m_Children:
   - {fileID: 1432329580}
   - {fileID: 1066806082}
+  - {fileID: 1367861587}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2780,6 +2781,9 @@ MonoBehaviour:
   Floor: {fileID: 5606752473296978770, guid: b4404267810928f4e8b23a88d2afecc6, type: 3}
   BreakableFloor: {fileID: 7818940884594923918, guid: 4f6f7d03f6d7b024b8de422c0be9e777,
     type: 3}
+  UpgradeRoom: {fileID: 7023101884875674692, guid: 5e42795f83d6d124a90dc2bb0c9c7d84,
+    type: 3}
+  currentLevel: 1
 --- !u!114 &1338881546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3032,6 +3036,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352837421}
   m_CullTransparentMesh: 0
+--- !u!1 &1367861586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1367861587}
+  m_Layer: 0
+  m_Name: LevelHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1367861587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367861586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1338881544}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1381030434
 GameObject:
   m_ObjectHideFlags: 0

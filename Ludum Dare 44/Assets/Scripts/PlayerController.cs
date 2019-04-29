@@ -130,4 +130,17 @@ public class PlayerController : MonoBehaviour
         Drills -= 1;
         _audioSource.PlayOneShot(drillSound, 1.0f);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Entrance")
+        {
+
+        }
+
+        else if(collision.gameObject.tag == "Exit")
+        {
+
+        }
+    }
 }
