@@ -1,16 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     public float maxWalkingSpeed = 10;
     public float maxFallSpeed = 7;
-    public float acceleration = 1;
 
-    public int numDrills;
-        public int numBlinks;
-    public int numBoosts;
+    public TextMeshProUGUI drillDisplay;
+    public TextMeshProUGUI blinkDisplay;
+    public TextMeshProUGUI dashDisplay;
+
+    int _drills;
+    public int Drills
+    {
+        get { return _drills; }
+        set
+        {
+            _drills = value;
+            drillDisplay.text = _drills.ToString();
+        }
+    }
+
+    int _blinks;
+    public int Blinks
+    {
+        get { return _blinks; }
+        set
+        {
+            _blinks = value;
+            blinkDisplay.text = _blinks.ToString();
+        }
+    }
+
+    int _boosts;
+    public int Boosts
+    {
+        get { return _boosts; }
+        set
+        {
+            _boosts = value;
+            dashDisplay.text = _boosts.ToString();
+        }
+    }
 
     public AudioClip blinkSound;
     public AudioClip drillSound;
@@ -52,11 +85,11 @@ public class PlayerController : MonoBehaviour
         _anim.SetFloat("WalkSpeed", Mathf.Abs(move.x));
         _rb.AddForce(move);
 
-        if (Input.GetKeyDown(KeyCode.B) && numBlinks > 0)
+        if (Input.GetKeyDown(KeyCode.B) && Blinks > 0)
             Blink();
-        if (Input.GetKeyDown(KeyCode.V) && numBoosts > 0)
+        if (Input.GetKeyDown(KeyCode.V) && Boosts > 0)
             Shift();
-        if (Input.GetKeyDown(KeyCode.C) && numDrills > 0)
+        if (Input.GetKeyDown(KeyCode.C) && Drills > 0)
             Dig();
 
         if (Mathf.Abs(_rb.velocity.x) > maxWalkingSpeed)
@@ -70,7 +103,7 @@ public class PlayerController : MonoBehaviour
         Vector3 blinkDir = Vector2.down*2;
 
         transform.position += blinkDir;
-        numBlinks -= 1;
+        Blinks -= 1;
         _audioSource.PlayOneShot(blinkSound, 1.0f);
     }
 
@@ -84,7 +117,7 @@ public class PlayerController : MonoBehaviour
             shiftForce = new Vector2(-300, 150);
         _rb.AddForce(shiftForce);
         _anim.SetTrigger("Dashing");
-        numBoosts -= 1;
+        Boosts -= 1;
         _audioSource.PlayOneShot(dashSound, 1.0f);
     }
 
@@ -94,7 +127,7 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.down, Color.green);
         if (hit.collider != null && hit.collider.gameObject.name == "Breakable")
             Destroy(hit.collider.gameObject);
-        numDrills -= 1;
+        Drills -= 1;
         _audioSource.PlayOneShot(drillSound, 1.0f);
     }
 }

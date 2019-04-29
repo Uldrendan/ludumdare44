@@ -37,12 +37,12 @@ public class GameManager : MonoBehaviour
         if (!refund && oxygen > 0)
         {
             oxygen -= 25;
-            player.numDrills += 1;
+            player.Drills += 1;
         }
-        else if(refund && player.numDrills > 0)
+        else if(refund && player.Drills > 0)
         {
             oxygen += 25;
-            player.numDrills -= 1;
+            player.Drills -= 1;
         }
     }
     public void PurchaseBoost(bool refund)
@@ -50,12 +50,12 @@ public class GameManager : MonoBehaviour
         if (!refund && oxygen > 0)
         {
             oxygen -= 25;
-            player.numBoosts += 1;
+            player.Boosts += 1;
         }
-        else if (refund && player.numDrills > 0)
+        else if (refund && player.Boosts > 0)
         {
             oxygen += 25;
-            player.numBoosts -= 1;
+            player.Boosts -= 1;
         }
     }
     public void PurchaseBlink(bool refund)
@@ -63,12 +63,12 @@ public class GameManager : MonoBehaviour
         if (!refund && oxygen > 0)
         {
             oxygen -= 25;
-            player.numBlinks += 1;
+            player.Blinks += 1;
         }
-        else if (refund && player.numDrills > 0)
+        else if (refund && player.Blinks > 0)
         {
             oxygen += 25;
-            player.numBlinks -= 1;
+            player.Blinks -= 1;
         }
     }
 
