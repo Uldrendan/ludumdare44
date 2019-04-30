@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelGenerator : MonoBehaviour
 {
+    public static LevelGenerator instance;
+
     public GameObject Wall;
     public GameObject Floor;
     public GameObject BreakableFloor;
@@ -20,6 +22,14 @@ public class LevelGenerator : MonoBehaviour
 
     public int currentLevel = 1;
 
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
     void Start()
     {
         GenerateLevel(currentLevel);
@@ -27,22 +37,20 @@ public class LevelGenerator : MonoBehaviour
 
     int x;
     int y;
-    void GenerateLevel(int level)
+    public void GenerateLevel(int level)
     {
         Transform levelHolder = transform.Find("LevelHolder");
         foreach (Transform child in levelHolder) //clear previous level
-            Destroy(child);
+            Destroy(child.gameObject);
 
-        theSourceFile = new FileInfo("Assets/Level_Data/level" + level + ".txt");
+        theSourceFile = new FileInfo(Application.dataPath + "/LevelData/level" + level + ".txt");
         if (theSourceFile.Exists)
         {
             reader = theSourceFile.OpenText();
 
-            while (text != null)
+            while ((text = reader.ReadLine()) != null)
             {
                 x = -7;
-
-                text = reader.ReadLine();
                 if (text != null)
                 {
                     levelLine = text.Split(',');

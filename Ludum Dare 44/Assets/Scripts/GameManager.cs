@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public PlayerController player;
 
+    public bool shopping;
+
     private void Awake()
     {
         if (instance == null)
@@ -23,11 +25,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        oxygen -= Time.deltaTime;
-        if (oxygen <= 0)
+        if (!shopping)
         {
-            Time.timeScale = 0;
-            gameOverPanel.SetActive(true);
+            oxygen -= Time.deltaTime;
+            if (oxygen <= 0)
+            {
+                Time.timeScale = 0;
+                gameOverPanel.SetActive(true);
+            }
         }
             
     }
@@ -49,12 +54,12 @@ public class GameManager : MonoBehaviour
     {
         if (!refund && oxygen > 0)
         {
-            oxygen -= 25;
+            oxygen -= 20;
             player.Boosts += 1;
         }
         else if (refund && player.Boosts > 0)
         {
-            oxygen += 25;
+            oxygen += 20;
             player.Boosts -= 1;
         }
     }
@@ -62,12 +67,12 @@ public class GameManager : MonoBehaviour
     {
         if (!refund && oxygen > 0)
         {
-            oxygen -= 25;
+            oxygen -= 20;
             player.Blinks += 1;
         }
         else if (refund && player.Blinks > 0)
         {
-            oxygen += 25;
+            oxygen += 20;
             player.Blinks -= 1;
         }
     }

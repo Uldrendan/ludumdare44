@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI blinkDisplay;
     public TextMeshProUGUI dashDisplay;
 
+    public GameObject UpgradePanel;
+
     int _drills;
     public int Drills
     {
@@ -77,10 +79,10 @@ public class PlayerController : MonoBehaviour
         else
             _anim.SetBool("Falling", true);
 
-        Vector2 move = new Vector2(Input.GetAxis("Horizontal") * maxWalkingSpeed,0);
+        Vector2 move = new Vector2(Input.GetAxis("Horizontal") * maxWalkingSpeed, 0);
         if (move.x < 0)
             _sr.flipX = true;
-        else if(move.x > 0)
+        else if (move.x > 0)
             _sr.flipX = false;
         _anim.SetFloat("WalkSpeed", Mathf.Abs(move.x));
         _rb.AddForce(move);
@@ -100,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
     void Blink()
     {
-        Vector3 blinkDir = Vector2.down*2;
+        Vector3 blinkDir = Vector2.down * 2;
 
         transform.position += blinkDir;
         Blinks -= 1;
@@ -112,7 +114,7 @@ public class PlayerController : MonoBehaviour
         Vector3 shiftForce = Vector3.zero;
 
         if (!_sr.flipX)
-            shiftForce = new Vector2(300,150);
+            shiftForce = new Vector2(300, 150);
         else
             shiftForce = new Vector2(-300, 150);
         _rb.AddForce(shiftForce);
@@ -126,21 +128,35 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.55f), Vector2.down, 0.1f);
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.down, Color.green);
         if (hit.collider != null && hit.collider.gameObject.name == "Breakable")
+        {
             Destroy(hit.collider.gameObject);
-        Drills -= 1;
+            Drills -= 1;
+        }
         _audioSource.PlayOneShot(drillSound, 1.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Entrance")
+        if (collision.gameObject.tag == "Entrance")
         {
-
+            _rb.gravityScale = 0;
+            _rb.velocity = Vector2.zero;
+            transform.position = collision.transform.parent.position;
+            GameManager.instance.oxygen = 100;
+            UpgradePanel.SetActive(true);
+            GameManager.instance.shopping = true;
         }
+    }
 
-        else if(collision.gameObject.tag == "Exit")
-        {
-
-        }
+    public void CloseUpgrade()
+    {
+        UpgradePanel.SetActive(false);
+        _rb.gravityScale = 1;
+        GameManager.instance.shopping = false;
+        LevelGenerator.instance.currentLevel += 1;
+        LevelGenerator.instance.GenerateLevel(LevelGenerator.instance.currentLevel);
+        GameObject.Find("MiniMap Camera").transform.position = new Vector3(GameObject.Find("MiniMap Camera").transform.position.x,
+                                                                    GameObject.Find("MiniMap Camera").transform.position.y - 31.6f,
+                                                                        GameObject.Find("MiniMap Camera").transform.position.z);
     }
 }
